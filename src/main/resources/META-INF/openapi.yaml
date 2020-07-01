@@ -1,0 +1,43 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI for quarkus rest
+  description: Documentation for quarkus rest
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:8080/
+    description: Optional dev mode server description
+
+paths:
+  /users:
+    get:
+      responses:
+        200:
+          description: OK - users list
+          content:
+            application/json: {}
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        200:
+          description: new user resource created
+          content:
+            application/json: {}
+components:
+  schemas:
+    User:
+      properties:
+        login:
+          type: string
+        name:
+          type: string
+        blog:
+          type: string
+        location:
+          type: string
+        bio:
+          type: string
