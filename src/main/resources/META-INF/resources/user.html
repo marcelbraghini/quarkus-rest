@@ -15,15 +15,42 @@
             //Initialize page with default data which is blank in this example
             $scope.users = [];
 
+            $scope.form = {
+                login: "",
+                name: "",
+                blog: "",
+                location: "",
+                bio: ""
+            };
+
             //Now load the data from server
             _refreshPageData();
+
+            //HTTP POST methods for add fruits
+            $scope.add = function () {
+                var data = { "login": $scope.form.login,
+                    "name": $scope.form.name,
+                    "blog": $scope.form.blog,
+                    "location": $scope.form.location,
+                    "bio": $scope.form.bio
+                };
+
+                $http({
+                    method: "POST",
+                    url: '/v1/users',
+                    data: angular.toJson(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(_success, _error);
+            };
 
             /* Private Methods */
             //HTTP GET- get all users collection
             function _refreshPageData() {
                 $http({
                     method: 'GET',
-                    url: '/users'
+                    url: '/v1/users'
                 }).then(function successCallback(response) {
                     $scope.users = response.data;
                 }, function errorCallback(response) {
@@ -33,10 +60,20 @@
 
             function _success(response) {
                 _refreshPageData();
+                _clearForm();
             }
 
             function _error(response) {
                 alert(response.data.message || response.statusText);
+            }
+
+            //Clear the form
+            function _clearForm() {
+                $scope.form.login = "";
+                $scope.form.name = "";
+                $scope.form.blog = "";
+                $scope.form.location = "";
+                $scope.form.bio = "";
             }
         });
     </script>
@@ -45,6 +82,22 @@
 
 <div class="container">
     <h1>REST Service - Users</h1>
+
+    <h3>Add a user</h3>
+    <form ng-submit="add()">
+        <div class="row">
+            <div class="col-6"><input type="text" placeholder="Login" ng-model="form.login" size="60"/></div>
+            <div class="col-6"><input type="text" placeholder="Name" ng-model="form.name" size="60"/></div>
+        </div>
+        <div class="row">
+            <div class="col-8"><input type="text" placeholder="Blog" ng-model="form.blog" size="60"/></div>
+            <div class="col-4"><input type="text" placeholder="Location" ng-model="form.location" size="60"/></div>
+        </div>
+        <div class="row">
+            <div class="col-12"><input type="text" placeholder="Bio" ng-model="form.bio" size="100"/></div>
+        </div>
+        <input type="submit" value="Save"/>
+    </form>
 
     <h3>Users List</h3>
     <div ng-repeat="user in users">

@@ -1,0 +1,21 @@
+# YAML Configuration file
+quarkus:
+  token: kasdhasdhuyasGDUGASgduAGSDGASHDGJAHSD
+  http:
+    port: 8080
+    test-port: 8085
+    cors: false
+  swagger-ui:
+    always-include: true
+    path: /swagger
+  mongodb:
+    database: quarkus
+    connection-string: mongodb://root:root@localhost:27017
+  log:
+      enable: true
+      level: INFO
+      color: true
+mp:
+  openapi:
+    scan:
+      disabled: true

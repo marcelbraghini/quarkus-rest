@@ -9,24 +9,60 @@ servers:
     description: Optional dev mode server description
 
 paths:
-  /users:
+  /v1/users:
     get:
+      description: Get all users
       responses:
         200:
-          description: OK - users list
+          description: OK
           content:
             application/json: {}
     post:
+      description: Create new user
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/User'
       responses:
-        200:
-          description: new user resource created
+        201:
+          description: Created
           content:
             application/json: {}
+        400:
+          description: Bad Request
+          content:
+            application/json: {}
+  /v1/users/{_id}:
+    get:
+      description: Get a user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json: {}
+        404:
+          description: Not Found
+          content:
+            application/json: {}
+    put:
+      description: Put a user
+      responses:
+        200:
+          description: OK
+          content:
+            application/json: {}
+        404:
+          description: Not Found
+    delete:
+      description: Delete a user
+      responses:
+        200:
+          description: OK
+        404:
+          description: Not Found
+
 components:
   schemas:
     User:
